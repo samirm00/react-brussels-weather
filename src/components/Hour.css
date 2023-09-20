@@ -1,0 +1,20 @@
+.hour {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: #444343;
+    border-radius: 9px;
+}
+
+.up-container {
+    display: flex;
+    justify-content: space-between;
+    width: 25%;
+}
+
+.up-container div {
+    width: 30.33%;
+    text-align: right;
+}

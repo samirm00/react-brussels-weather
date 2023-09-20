@@ -1,0 +1,16 @@
+.day-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.day {
+    font-weight: bold;
+    margin-bottom: 5px;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.unit {
+    margin-right: 40px;
+}
