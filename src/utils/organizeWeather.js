@@ -1,33 +1,33 @@
 const organizeWeather = (weatherData) => {
-    const {
-        elevation,
-        latitude,
-        longitude,
-        timezone,
-        hourly: { temperature_2m, time }
-    } = weatherData;
+    const { hourly } = weatherData;
+    const { temperature_2m, time } = hourly;
 
+    // to save all days
     const days = {};
 
+    // to save the temp and compare it with the new temp for the next hour
     let oldTemp;
     time.forEach((hour, index) => {
         const now = new Date(hour);
-        const day = now.getDate(); 
+        const day = now.getDate(); // day in month
 
-        const formattedHour = `${
-            now.getHours() < 10 ? '0' : ''
-        }${now.getHours()} :  ${
-            now.getMinutes() < 10 ? '0' : ''
-        }${now.getMinutes()} : ${
-            now.getSeconds() < 10 ? '0' : ''
-        }${now.getSeconds()}`;
+        let hours = now.getHours();
+        let minutes = now.getMinutes();
+        let seconds = now.getSeconds();
 
-        const formattedTemp = temperature_2m[index].toFixed(1);   
+        hours = hours < 10 ? '0' + hours : hours;
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+
+        const formattedHour = `${hours}:${minutes}:${seconds}`;
+        const temp = temperature_2m[index];
+        const formattedTemp = temperature_2m[index].toFixed(1); // to add 1 decimal after "."
+        // to check if the temp is greater or less or equal to the oldTemp
         let up;
         if (oldTemp) {
-            if (oldTemp > temperature_2m[index]) {
+            if (oldTemp > temp) {
                 up = 'down';
-            } else if (oldTemp < temperature_2m[index]) {
+            } else if (oldTemp < temp) {
                 up = 'up';
             } else {
                 up = 'same';
@@ -42,20 +42,17 @@ const organizeWeather = (weatherData) => {
             up: up
         };
 
+        // check if day already exists in days object if not create it.
         if (!days[day]) {
             days[day] = [];
         }
         days[day].push(hourAndTemp);
-        oldTemp = temperature_2m[index];
+
+        // make the oldTemp the current temp
+        oldTemp = temp;
     });
 
-    return {
-        elevation,
-        latitude,
-        longitude,
-        timezone,
-        days
-    };
+    return days;
 };
 
 export default organizeWeather;

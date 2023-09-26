@@ -5,13 +5,13 @@ import organizeWeather from '../utils/organizeWeather';
 import Day from './Day';
 
 const Weather = ({ weather }) => {
-    const weatherData = organizeWeather(weather);
+    const days = organizeWeather(weather);
 
     return (
         <div>
             <div className="day-hours">Day | Hours</div>
-            {weatherData.days &&
-                Object.entries(weatherData.days).map(([key, value], index) => (
+            {days &&
+                Object.entries(days).map(([key, value], index) => (
                     <Day key={index} day={key} dayInfo={value} />
                 ))}
         </div>
